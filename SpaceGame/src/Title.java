@@ -50,7 +50,7 @@ public class Title
 			if (x >= ((maxX) - 90)&&x<(maxX-70))
 			{
 				//if the title is within 90 units of its max, it will initiate the "thud" sound
-				//in anticipation of its stopping nd shaking
+				//in anticipation of its stopping and shaking
 				Music.playBang();
 			}
 			gc.setFill(Color.WHITE);
