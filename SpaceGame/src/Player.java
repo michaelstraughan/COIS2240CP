@@ -1,14 +1,19 @@
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.canvas.GraphicsContext;
 
 public class Player
 {
-	private double x, y;
+	private double x, y, height = 10, width = 10;
+	private GraphicsContext graphicsContext;
 
-	public Player(double x, double y)
+	public Player(double x, double y, GraphicsContext graphicsContext)
 	{
-		this.setX(x);
-		this.setY(y);
+		this.x = x;
+		this.y = y;
+		this.graphicsContext = graphicsContext;
 	}
 
 	public double getX()
@@ -31,26 +36,42 @@ public class Player
 		this.y = y;
 	}
 
-	public void drawOval(GraphicsContext graphicsContext)
+	public double getHeight()
 	{
-		graphicsContext.fillOval(getX(), getY(), 10, 10);
+		return height;
 	}
 
-	public void moveRight(GraphicsContext graphicsContext)
+	public void setHeight(double height)
+	{
+		this.height = height;
+	}
+
+	public double getWidth()
+	{
+		return width;
+	}
+
+	public void setWidth(double width)
+	{
+		this.width = width;
+	}
+
+	public void drawOval()
+	{
+		graphicsContext.fillOval(getX(), getY(), getHeight(), getWidth());
+	}
+
+	public void moveRight()
 	{
 		setX(getX() + 1);
-		drawOval(graphicsContext);
+		drawOval();
 	}
 
-	public void moveLeft(GraphicsContext graphicsContext)
+	public void moveLeft()
 	{
 		setX(getX() - 1);
-		drawOval(graphicsContext);
+		drawOval();
 	}
 
-	public void shoot(GraphicsContext graphicsContext)
-	{
-		Bullet bullet = new Bullet(getX(),getY());
-	}
 
 }

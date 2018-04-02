@@ -9,7 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class ActGame extends Application
 {
@@ -23,7 +25,8 @@ public class ActGame extends Application
 	static int WIDTH = 512;
 	static int HEIGHT = 256;
 	static Player player;
-
+	static List<Bullet> bullets;
+	static long start, finish;
 
 	static HashSet<String> currentlyActiveKeys;
 
@@ -83,7 +86,9 @@ public class ActGame extends Application
 
 	private static void loadGraphics()
 	{
-		player = new Player(50, 50);
+		player = new Player(50, 200, graphicsContext);
+		bullets = new ArrayList<Bullet>();
+		start = System.nanoTime();
 	}
 
 	private static void tickAndRender()
@@ -93,19 +98,67 @@ public class ActGame extends Application
 
 		if (currentlyActiveKeys.contains("LEFT"))
 		{
-			player.moveLeft(graphicsContext);
-		} 
+			if (currentlyActiveKeys.contains("SPACE"))
+			{
+				shoot();
+			}
+			player.moveLeft();
+		}
 		else if (currentlyActiveKeys.contains("RIGHT"))
 		{
-			player.moveRight(graphicsContext);
-		} 
+			if (currentlyActiveKeys.contains("SPACE"))
+			{
+				shoot();
+			}
+			player.moveRight();
+		}
 		else if (currentlyActiveKeys.contains("SPACE"))
 		{
-			player.shoot(graphicsContext);
-		} 
+			player.drawOval();
+			shoot();
+		}
 		else
 		{
-			player.drawOval(graphicsContext);
+			player.drawOval();
+		}
+		updateBullets();
+	}
+
+	public static void shoot()
+	{
+		int bulletNum = 0;
+		finish = System.nanoTime();
+		if ((finish - start) / 10000000 >= 50)
+		{
+			while (bulletNum < bullets.size())
+			{
+				if (bullets.get(bulletNum).checkFired() == false)
+				{
+					bullets.get(bulletNum).reset(player.getX(),player.getY());
+					start = System.nanoTime();
+					System.out.print("\n" + bullets.size());
+					return;
+				}
+				else
+				{
+				}
+				bulletNum++;
+			}
+			
+			Bullet bullet = new Bullet(player.getX(), player.getY(), graphicsContext);
+			bullets.add(bullet);
+			start = System.nanoTime();
+		}
+	}
+
+	public static void updateBullets()
+	{
+		int bulletNum = 0;
+		while (bulletNum < bullets.size())
+		{
+			
+			bullets.get(bulletNum).moveUp(HEIGHT);
+			bulletNum++;
 		}
 	}
 }
