@@ -1,10 +1,16 @@
+
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 public class SpaceGame extends Application {
@@ -14,17 +20,29 @@ public class SpaceGame extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+    	
         primaryStage.setTitle("Space Game");
         Pane root = new Pane();
+        GridPane root2 = new GridPane();
+        root.getChildren().add(root2);
+        
+        //Button buttontest = new Button("CLICK");
+        //buttontest.setLayoutX(500);
+        //buttontest.setLayoutY(250);
+        
         Scene theScene = new Scene (root,500,500,Color.BLACK);
-        primaryStage.setScene(theScene);
+       
         Canvas canvas = new Canvas (theScene.getWidth(),theScene.getHeight()) ;
+        //buttontest.setPrefSize(10, 10);
+        //root2.add(buttontest,5,0);
         root.getChildren().add(canvas);
+        
         GraphicsContext gc = canvas.getGraphicsContext2D();
         MainMenu mainMenu= new MainMenu(gc, theScene);
-        final long startNanoTime = System.nanoTime();
+        
+        primaryStage.setScene(theScene);
 
-        new AnimationTimer()
+        new AnimationTimer()	
         {
             public void handle(long currentNanoTime)
             {
