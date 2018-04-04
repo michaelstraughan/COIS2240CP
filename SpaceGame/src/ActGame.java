@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -22,21 +23,17 @@ public class ActGame extends Application
 
 	static Scene mainScene;
 	static GraphicsContext graphicsContext;
-	static int WIDTH = 512;
-	static int HEIGHT = 256;
-	static Player player;
-	static List<Bullet> bullets;
-	static List<Enemy> enemies;
-
+	static int WIDTH = 600;
+	static int HEIGHT = 600;
 	static HashSet<String> currentlyActiveKeys;
-
+	static Level level;
 	@Override
 	public void start(Stage mainStage)
 	{
 		mainStage.setTitle("Event Handling");
 
 		Group root = new Group();
-		mainScene = new Scene(root);
+		mainScene = new Scene(root,WIDTH,HEIGHT,Color.BLACK);
 		mainStage.setScene(mainScene);
 
 		Canvas canvas = new Canvas(WIDTH, HEIGHT);
@@ -46,7 +43,7 @@ public class ActGame extends Application
 
 		graphicsContext = canvas.getGraphicsContext2D();
 
-		loadGraphics();
+		level = new Level(graphicsContext,mainScene,WIDTH, HEIGHT);
 
 		/**
 		 * Main "game" loop
@@ -58,7 +55,7 @@ public class ActGame extends Application
 				tickAndRender();
 			}
 		}.start();
-
+		
 		mainStage.show();
 	}
 
@@ -83,69 +80,37 @@ public class ActGame extends Application
 			}
 		});
 	}
-
-	private static void loadGraphics()
-	{
-		player = new Player(50, 200, graphicsContext);
-		bullets = new ArrayList<Bullet>();
-		enemies = new ArrayList<Enemy>();
-		for (int random = 0; random < 10; random++)
-		{
-			Enemy enemy = new Enemy(random * 50, 20, graphicsContext);
-			enemies.add(enemy);
-		}
-	}
-
 	private static void tickAndRender()
 	{
 		// clear canvas
 		graphicsContext.clearRect(0, 0, WIDTH, HEIGHT);
-		updateBullets();
-		updateEnemies();
+	Level.update();
 		if (currentlyActiveKeys.contains("LEFT"))
 		{
 			if (currentlyActiveKeys.contains("SPACE"))
 			{
-				player.shoot(bullets);
+				Level.playerShoot();
 			}
-			player.moveLeft();
+			Level.player.moveLeft();
 		}
 		else if (currentlyActiveKeys.contains("RIGHT"))
 		{
 			if (currentlyActiveKeys.contains("SPACE"))
 			{
-				player.shoot(bullets);
+				Level.playerShoot();
 			}
-			player.moveRight();
+			Level.player.moveRight();
 		}
 		else if (currentlyActiveKeys.contains("SPACE"))
 		{
-			player.drawOval();
-			player.shoot(bullets);
+			Level.playerShoot();
 		}
 		else
 		{
-			player.drawOval();
+			Level.player.drawObject();
 		}
 		
 	}
 
-	public static void updateEnemies()
-	{
-		for (int random = 0; random < enemies.size(); random++)
-		{
-			enemies.get(random).hit(bullets);
-			enemies.get(random).drawOval();
-			
-		}
-	}
 
-	public static void updateBullets()
-	{
-		for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++)
-		{
-
-			bullets.get(bulletNum).moveUp(HEIGHT);
-		}
-	}
 }

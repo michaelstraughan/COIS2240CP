@@ -34,11 +34,11 @@ public class StarrySky
 	 * moveSky Method, will loop and move every star and then redraw them
 	 * -----------------------------------------------------------------------------------
 	 */
-	public void moveSky()
+	public void moveSky(int x, int y)
 	{
 		for (int arrayCount = 0; arrayCount < stars.length; arrayCount++)
 		{
-			stars[arrayCount].moveStar(1, -1);//these parameters change the x and y value. In this case, x +1, y-1
+			stars[arrayCount].moveStar(x, y);
 			stars[arrayCount].drawStar();
 		}
 		

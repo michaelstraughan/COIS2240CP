@@ -55,7 +55,7 @@ public class Star
 	{
 		//If the X and Y value are on theScene (in this case, y=0 is the top of the scene) it will add the parameters
 		//to the x and y.
-		if (this.x < theScene.getWidth() && this.y > 0)
+		if (this.x < theScene.getWidth() && this.y <theScene.getHeight())
 		{
 			this.x += x;
 			this.y += y;
@@ -64,20 +64,20 @@ public class Star
 		else
 		{
 
-			double randomAxis = (Math.random() * 2);
+			//double randomAxis = (Math.random() * 2);
 			//generates a number between 0 and 2, if the number lower than one then it will move the star to a random point
 			//along the y axis
-			if (randomAxis <= 1)
-			{
+			//if (randomAxis <= 1)
+			//{
 				this.x = (int) (Math.random() * theScene.getWidth());
-				this.y = (int) theScene.getHeight();
-			}
+				this.y = 0;
+			//}
 			//else, the point will be along the x axis
-			else
-			{
-				this.x = 0;
-				this.y = (int) (Math.random() * theScene.getHeight());
-			}
+			//else
+			//{
+			//	this.x = 0;
+			//	this.y = (int) (Math.random() * theScene.getHeight());
+			//}
 		}
 	}
 }

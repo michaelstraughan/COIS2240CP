@@ -21,12 +21,12 @@ public class MainMenu
 	 */
 	public MainMenu(GraphicsContext gc, Scene theScene)
 	{
-		Music.playMenuMusic();
+		//Music.playMenuMusic();
 		this.gc = gc;
 		this.theScene = theScene;
 		sky = new StarrySky(gc, theScene);
-		topTitle = new Title(gc, theScene, "Space", 50, (int) (theScene.getWidth() - theScene.getWidth() * 2));
-		bottomTitle = new Title(gc, theScene, "Game", 100, (int) (theScene.getWidth() - theScene.getWidth() * 2));
+		//topTitle = new Title(gc, theScene, "Space", 50, (int) (theScene.getWidth() - theScene.getWidth() * 2));
+		//bottomTitle = new Title(gc, theScene, "Game", 100, (int) (theScene.getWidth() - theScene.getWidth() * 2));
 	}
 
 	/*
@@ -36,11 +36,11 @@ public class MainMenu
 	 */
 	public void animateMenu()
 	{
-		sky.moveSky();
-		topTitle.slideTitle((int) (theScene.getWidth() * 0.2));
-		if (topTitle.x >= theScene.getWidth() * 0.2)
-		{
-			bottomTitle.slideTitle((int) (theScene.getWidth() * 0.2 + 50));
-		}
+		sky.moveSky(0,1);
+		//topTitle.slideTitle((int) (theScene.getWidth() * 0.2));
+		//if (topTitle.x >= theScene.getWidth() * 0.2)
+		//{
+		//	bottomTitle.slideTitle((int) (theScene.getWidth() * 0.2 + 50));
+		//}
 	}
 }
