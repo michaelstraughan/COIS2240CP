@@ -2,30 +2,28 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 /*
  * -----------------------------------------------------------------------------------
- * StarrySky Class. Creates an array of stars for the background and will move them.
+ * Background Class. Creates an array of stars for the background and will move them.
  * -----------------------------------------------------------------------------------
  */
-public class StarrySky
+public class Background //StarBackground
 {
 	Star[] stars = new Star[100];
     GraphicsContext gc;
-    Scene theScene;
-	public StarrySky()
-	{
-	}
+    int height, width;
 	/*
 	 * -----------------------------------------------------------------------------------
-	 * StarrySky Constructor. Accepts the GraphicsContext the stars will be drawn on and the scene for the dimensions
+	 * Background Constructor. Accepts the GraphicsContext the stars will be drawn on and the dimensions
 	 * -----------------------------------------------------------------------------------
 	 */
-	public StarrySky(GraphicsContext gc,Scene theScene)
+	public Background(GraphicsContext gc,int height, int width)
 	{
 		this.gc=gc;
-		this.theScene=theScene;
+		this.height=height;
+		this.width=width;
 		//For loop creates 100 stars
 		for (int arrayCount = 0; arrayCount < stars.length; arrayCount++)
 		{
-			stars[arrayCount]=new Star(this.gc, this.theScene);
+			stars[arrayCount]=new Star(this.gc, height,width);
 			stars[arrayCount].drawStar();
 		}
 	}
@@ -34,7 +32,7 @@ public class StarrySky
 	 * moveSky Method, will loop and move every star and then redraw them
 	 * -----------------------------------------------------------------------------------
 	 */
-	public void moveSky(int x, int y)
+	public void animateBackground(int x, int y)
 	{
 		for (int arrayCount = 0; arrayCount < stars.length; arrayCount++)
 		{

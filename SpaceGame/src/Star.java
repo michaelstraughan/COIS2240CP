@@ -9,29 +9,24 @@ import javafx.scene.paint.Color;
  */
 public class Star
 {
-	int x, y;
+	int x, y, height, width;
 	GraphicsContext gc;
-	Scene theScene;
-
-	public Star()
-	{
-
-	}
 
 	/*
 	 * -----------------------------------------------------------------------------------
 	 * Star constructor, it accepts the GraphicContext on which it will be drawn and the Scene to get measurements
 	 * -----------------------------------------------------------------------------------
 	 */
-	public Star(GraphicsContext gc, Scene theScene)
+	public Star(GraphicsContext gc, int height, int width)
 	{
 		this.gc = gc;
-		this.theScene = theScene;
+		this.height=height;
+		this.width=width;
 
 		//X and Y will be  randomly generated inside the dimensions of the Scene
 
-		x = (int) (Math.random() * theScene.getWidth());
-		y = (int) (Math.random() * theScene.getHeight());
+		x = (int) (Math.random() * width);
+		y = (int) (Math.random() * height);
 	}
 
 	/*
@@ -55,7 +50,7 @@ public class Star
 	{
 		//If the X and Y value are on theScene (in this case, y=0 is the top of the scene) it will add the parameters
 		//to the x and y.
-		if (this.x < theScene.getWidth() && this.y <theScene.getHeight())
+		if (this.x < width && this.y < height)
 		{
 			this.x += x;
 			this.y += y;
@@ -63,21 +58,9 @@ public class Star
 		//If the X or Y are not on the scene it will reset the x and y to a randomly generated point along the x or y axis
 		else
 		{
-
-			//double randomAxis = (Math.random() * 2);
-			//generates a number between 0 and 2, if the number lower than one then it will move the star to a random point
-			//along the y axis
-			//if (randomAxis <= 1)
-			//{
-				this.x = (int) (Math.random() * theScene.getWidth());
-				this.y = 0;
-			//}
-			//else, the point will be along the x axis
-			//else
-			//{
-			//	this.x = 0;
-			//	this.y = (int) (Math.random() * theScene.getHeight());
-			//}
+			//spawns along the top screen specifically. Changing this will change which side they spawn from.
+			this.x = (int) (Math.random() * width);
+			this.y = 0;
 		}
 	}
 }

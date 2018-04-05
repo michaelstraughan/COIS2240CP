@@ -10,7 +10,7 @@ public class Level
 	static List<Bullet> bullets;
 	static List<Enemy> enemies;
 	static int WIDTH, HEIGHT;
-	static MainMenu Background;
+	static Background Background;
 	public Level(GraphicsContext graphicsContext, Scene mainScene, int WIDTH, int HEIGHT)
 	{
 		player = new Player(WIDTH/2, HEIGHT-100, graphicsContext);
@@ -18,7 +18,7 @@ public class Level
 		enemies = new ArrayList<Enemy>();
 		this.WIDTH=WIDTH;
 		this.HEIGHT=HEIGHT;
-		Background= new MainMenu(graphicsContext, mainScene);
+		Background= new Background(graphicsContext, HEIGHT,WIDTH);
 		
 	}
 	public static void update(){
@@ -45,7 +45,7 @@ public class Level
 	}
 	public static void updateBackground()
 	{
-		Background.animateMenu();
+		Background.animateBackground(0,1);
 	}
 	public static void playerShoot(){
 		player.shoot(bullets);
