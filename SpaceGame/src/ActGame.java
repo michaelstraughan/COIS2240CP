@@ -30,7 +30,7 @@ public class ActGame extends Application
 	@Override
 	public void start(Stage mainStage)
 	{
-		mainStage.setTitle("SpaceGame");
+		mainStage.setTitle("Space Game");
 
 		Group root = new Group();
 		mainScene = new Scene(root,WIDTH,HEIGHT,Color.BLACK);
@@ -43,7 +43,7 @@ public class ActGame extends Application
 
 		graphicsContext = canvas.getGraphicsContext2D();
 
-		level = new Level(graphicsContext,mainScene,WIDTH, HEIGHT);
+		level = new Level(graphicsContext,WIDTH, HEIGHT);
 
 		/**
 		 * Main "game" loop
@@ -84,6 +84,7 @@ public class ActGame extends Application
 	{
 		// clear canvas
 		graphicsContext.clearRect(0, 0, WIDTH, HEIGHT);
+		
 	Level.update();
 		if (currentlyActiveKeys.contains("LEFT"))
 		{

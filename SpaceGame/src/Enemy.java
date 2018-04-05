@@ -13,7 +13,6 @@ public class Enemy
 {
 
 	private double x, y, height, width;//Location, size
-
 	private boolean hitStatus = false, isEnemy = true;
 	private GraphicsContext graphicsContext; //scene for drawing
 	long start = System.nanoTime(), finish; // timer to restrict shooting, starts at the creation of the player
@@ -114,54 +113,11 @@ public class Enemy
 	 * Move Right method, moves the enemy to the right and calls the draw method
 	 * -----------------------------------------------------------------------------------
 	 */
-	/*public static int move(Enemy[] enemies, int direction)
+
+	public void move(double moveX,double moveY)
 	{
-		int tempx;
-		if (enemies[9].getX() > 550)
-		{
-			direction = 0;
-		}
-		else if (enemies[0].getX() < 0)
-		{
-			direction = 1;
-		}
-		if (direction == 1)
-		{
-			tempx = 1;
-		}
-		else
-		{
-			tempx = -1;
-		}
-		for (int count = 0; count < enemies.length; count++)
-		{
-			enemies[count].setX(enemies[count].getX() + tempx);
-			enemies[count].setY(enemies[count].getY() + 0.1);
-	
-		}
-		return direction;
-	
-	}
-	*/
-	public int moveEnemy(int direction,int count)
-	{
-		if (direction == 0)
-		{
-			x = x - 1;
-		}
-		else if (direction == 1)
-		{
-			x = x + 1;
-		}
-		if (x > 550)
-		{
-			direction = 0;
-		}
-		else if (x < 0)
-		{
-			direction = 1;
-		}
-		return direction;
+		x=x+moveX;
+		y=y+moveY;
 	}
 
 	/*
@@ -171,8 +127,8 @@ public class Enemy
 	 */
 	public void shoot(List<Bullet> bullets)
 	{
-		drawObject();
-
+		double shootProb=(Math.random());
+		if(shootProb<0.0003333){
 		finish = System.nanoTime(); //generates the second time variable
 
 		if ((finish - start) / 10000000 >= 50) // if the time from the last shot is greater than or equal to 50 milliseconds, restricts the players shot
@@ -182,42 +138,26 @@ public class Enemy
 				if (bullets.get(bulletNum).checkFired() == false) //if a bullet was set to not fired (Would have been set by the constructor or reset by Bullet methods)
 				{
 
-					bullets.get(bulletNum).fire(x, y, 1); //fire method will fire an already created bullet object
+					bullets.get(bulletNum).fire(x, y, 1,isEnemy); //fire method will fire an already created bullet object
 					start = System.nanoTime(); //starts timer again, generating the first time variable
 					return; //exits method
 				}
 			}
 
-			Bullet bullet = new Bullet(x, y, getGraphicsContext(), 1); //if no bullet has been found that is set to not fired it will create a new bullet
+			Bullet bullet = new Bullet(x, y, getGraphicsContext(), 1,isEnemy); //if no bullet has been found that is set to not fired it will create a new bullet
 			bullets.add(bullet); //this new bullet will be added to the bullet list
 
 			start = System.nanoTime(); //starts timer again, generating the first time variable
 		}
-	}
-
-	/*
-	 * -----------------------------------------------------------------------------------
-	 * CheckHitStatus method, cycles through the bullets list and determines if any have hit the player
-	 * -----------------------------------------------------------------------------------
-	 */
-	public void checkHitStatus(List<Bullet> bullets)
-	{
-		for (int count = 0; count < bullets.size(); count++) //will cycle through the bullet list
-		{
-			// this if statement takes the bullets location and determines if it shares a domain with the image and makes the enemy disappear
-			if (bullets.get(count).checkFired()==true&&hitStatus == false && bullets.get(count).getX() < x + (sprite.getWidth())
-					&& bullets.get(count).getX() > x - (sprite.getWidth()) && bullets.get(count).getY() == y)
-
-			{
-				setHitStatus(true);
-				bullets.get(count).reset();
-			}
 		}
 	}
-
 	public void setHitStatus(boolean hitStatus)
 	{
 		this.hitStatus = hitStatus;
+	}
+	public boolean getHitStatus()
+	{
+		return hitStatus;
 	}
 
 	public double getHeight()

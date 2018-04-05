@@ -18,6 +18,7 @@ public class Player extends Enemy
 		setSprite(sprite);
 		setHeight(sprite.getHeight());
 		setWidth(sprite.getWidth());
+		setisEnemy(false);
 	}
 	public void moveRight()
 	{
@@ -46,13 +47,13 @@ public class Player extends Enemy
 				if (bullets.get(bulletNum).checkFired() == false) //if a bullet was set to not fired (Would have been set by the constructor or reset by Bullet methods)
 				{
 					
-					bullets.get(bulletNum).fire(getX(), getY(), -1); //fire method will fire an already created bullet object
+					bullets.get(bulletNum).fire(getX(), getY(), -1,getisEnemy()); //fire method will fire an already created bullet object
 					start = System.nanoTime(); //starts timer again, generating the first time variable
 					return; //exits method
 				}
 			}
 
-			Bullet bullet = new Bullet(getX(), getY(), getGraphicsContext(),-1); //if no bullet has been found that is set to not fired it will create a new bullet
+			Bullet bullet = new Bullet(getX(), getY(), getGraphicsContext(),-1,getisEnemy()); //if no bullet has been found that is set to not fired it will create a new bullet
 			bullets.add(bullet); //this new bullet will be added to the bullet list
 			
 			start = System.nanoTime(); //starts timer again, generating the first time variable

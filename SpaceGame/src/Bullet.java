@@ -18,14 +18,15 @@ public class Bullet extends Enemy
 	 * Bullet Constructor, takes the current x and y from the shooter as well as the scene to be drawn on
 	 * -----------------------------------------------------------------------------------
 	 */
-	public Bullet(double x, double y, GraphicsContext graphicsContext, int direction)
+	public Bullet(double x, double y, GraphicsContext graphicsContext, int direction, boolean isEnemy)
 	{
 		//+15 pixels makes the bullet shoot from the center of the Image
-		super(x+15, y, graphicsContext);
+		super(x + 15, y, graphicsContext);
 
-		this.direction=direction;
+		this.direction = direction;
 		fired = true; //bullet becomes 'fired' the moment its created
 		Image sprite = new Image("file:Bullet.png", 20, 20, false, false); //the bullet sprite
+		setisEnemy(isEnemy);
 		setSprite(sprite);
 		setHeight(sprite.getHeight());
 		setWidth(sprite.getWidth());
@@ -39,7 +40,16 @@ public class Bullet extends Enemy
 	 */
 	public void move(int HEIGHT)
 	{
-		if (getY() > (HEIGHT - HEIGHT) && fired == true)
+		int direction;
+		if (getisEnemy() == false)
+		{
+			direction = -1;
+		}
+		else
+		{
+			direction = 1;
+		}
+		if (getY() > (HEIGHT - HEIGHT) && getY() < HEIGHT && fired == true)
 		{
 			setY(getY() + direction); //-1 indicates 1 unit moved upwards
 			drawObject();
@@ -65,12 +75,13 @@ public class Bullet extends Enemy
 	 * fire method, takes a bullet on the scene and fires it from x, y location
 	 * -----------------------------------------------------------------------------------
 	 */
-	public void fire(double x, double y,int direction)
+	public void fire(double x, double y, int direction, boolean isEnemy)
 	{
-		setX(x+15);
+		setX(x + 15);
 		setY(y);
 		fired = true;
-		this.direction=direction;
+		this.direction = direction;
+		setisEnemy(isEnemy);
 	}
 
 	/*
