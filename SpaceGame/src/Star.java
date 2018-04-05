@@ -50,7 +50,7 @@ public class Star
 	{
 		//If the X and Y value are on theScene (in this case, y=0 is the top of the scene) it will add the parameters
 		//to the x and y.
-		if (this.x < width && this.y < height)
+		if (this.x < width && this.y < height&&this.x >0 && this.y > 0)
 		{
 			this.x += x;
 			this.y += y;
@@ -60,7 +60,7 @@ public class Star
 		{
 			//spawns along the top screen specifically. Changing this will change which side they spawn from.
 			this.x = (int) (Math.random() * width);
-			this.y = 0;
+			this.y = 1;
 		}
 	}
 }

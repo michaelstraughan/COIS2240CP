@@ -8,47 +8,75 @@ public class Level
 {
 	static Player player;
 	static List<Bullet> bullets;
-	static List<Enemy> enemies;
-	static int WIDTH, HEIGHT;
+	static Enemy[] enemies;
+	static int WIDTH, HEIGHT, enemyDirection=0;
 	static Background Background;
+
 	public Level(GraphicsContext graphicsContext, Scene mainScene, int WIDTH, int HEIGHT)
 	{
-		player = new Player(WIDTH/2, HEIGHT-100, graphicsContext);
+		player = new Player(WIDTH / 2, HEIGHT - 100, graphicsContext,WIDTH);
 		bullets = new ArrayList<Bullet>();
-		enemies = new ArrayList<Enemy>();
-		this.WIDTH=WIDTH;
-		this.HEIGHT=HEIGHT;
-		Background= new Background(graphicsContext, HEIGHT,WIDTH);
-		
+		enemies = new Enemy[50];
+		layoutEnemies(graphicsContext);
+		this.WIDTH = WIDTH;
+		this.HEIGHT = HEIGHT;
+		Background = new Background(graphicsContext, HEIGHT, WIDTH);
+
 	}
-	public static void update(){
+
+	public static void update()
+	{
+		updateBackground();
 		updateBullets();
 		updateEnemies();
-		updateBackground();
+		
 	}
+
 	public static void updateEnemies()
 	{
-		for (int random = 0; random < enemies.size(); random++)
+		//enemyDirection=Enemy.move(enemies,enemyDirection);
+		for (int count = 0; count < enemies.length; count++)
 		{
-			enemies.get(random).checkHitStatus(bullets);
-			enemies.get(random).drawObject();
-			
+			enemyDirection=enemies[count].moveEnemy(enemyDirection,count);
+			enemies[count].checkHitStatus(bullets);
+			enemies[count].drawObject();
+
 		}
 	}
+
 	public static void updateBullets()
 	{
 		for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++)
 		{
 
-			bullets.get(bulletNum).moveUp(HEIGHT);
+			bullets.get(bulletNum).move(HEIGHT);
 		}
 	}
+
 	public static void updateBackground()
 	{
-		Background.animateBackground(0,1);
+		Background.animateBackground(0, 1);
 	}
-	public static void playerShoot(){
+
+	public static void playerShoot()
+	{
 		player.shoot(bullets);
 	}
-	
+	public static void layoutEnemies(GraphicsContext graphicsContext)
+	{
+		int x=45,y=25,startX=x;
+		enemies[0]=new Enemy(x,y, graphicsContext);
+		for (int count = 1; count < enemies.length; count++)
+		{
+			if(count%10==0){
+				x=startX;
+				y=y+50;
+			}
+			else{
+			x=x+50;
+			}
+			enemies[count]=new Enemy(x,y, graphicsContext);
+		}
+	}
+
 }

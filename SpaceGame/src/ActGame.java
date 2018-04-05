@@ -30,7 +30,7 @@ public class ActGame extends Application
 	@Override
 	public void start(Stage mainStage)
 	{
-		mainStage.setTitle("Event Handling");
+		mainStage.setTitle("SpaceGame");
 
 		Group root = new Group();
 		mainScene = new Scene(root,WIDTH,HEIGHT,Color.BLACK);
