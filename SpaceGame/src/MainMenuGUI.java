@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -17,14 +19,15 @@ public class MainMenuGUI extends Application {
 	private GameMenu mainMenu;
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-
+	public void start(Stage mainMenuStage) throws Exception {
+		mainMenuStage.setTitle("SPACING OUT");
+		
 		Pane root = new Pane();
-		root.setPrefSize(400, 400);
+		root.setPrefSize(600, 600);
 		
 		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		mainMenuStage.setScene(scene);
+		mainMenuStage.show();
 		
 		mainMenu = new GameMenu();
 		
@@ -37,54 +40,61 @@ public class MainMenuGUI extends Application {
 	private class GameMenu extends Parent {
 		public GameMenu() {
 			VBox menu0 = new VBox(10);
-			VBox menu1 = new VBox(10);
+			menu0.setAlignment(Pos.CENTER);
+			menu0.setTranslateX(150);
 			
-			MenuButton btnStart = new MenuButton("Start");
+			
+			Text textTitle = new Text("SPACING OUT");
+			textTitle.setFont(Font.font ("Roboto", 40));
+			textTitle.setFill(Color.WHITE);
+			
+			menu0.setMargin(textTitle, new Insets(100,0,100,0));
+			
+			MenuButton btnStart = new MenuButton("START");
 			btnStart.setOnMouseClicked(event -> {
 				
 				
 			});
 			
-			MenuButton btnScores = new MenuButton("Scores");
+			MenuButton btnScores = new MenuButton("SCORES");
 			btnScores.setOnMouseClicked(event -> {
 				
 				
 			});
 			
-			MenuButton btnControls = new MenuButton("Controls");
+			MenuButton btnControls = new MenuButton("CONTROLS");
 			btnScores.setOnMouseClicked(event -> {
 				
 				
 			});
 			
-			MenuButton btnExit = new MenuButton("Exit");
+			MenuButton btnExit = new MenuButton("EXIT");
 			btnExit.setOnMouseClicked(event -> {
 				System.exit(0);
 				
 			});
 			
-			menu0.getChildren().addAll(btnStart, btnScores, btnControls, btnExit);
+			menu0.getChildren().addAll(textTitle, btnStart, btnScores, btnControls, btnExit);
 			
-			Rectangle bg = new Rectangle (400, 400);
+			
+			Rectangle bg = new Rectangle (600, 600);
 		
 			getChildren().addAll(bg, menu0);
 			
-			MenuButton btnBack = new MenuButton("Back");
-			btnBack.setOnMouseClicked(event -> {
-				
-			});
 		}
 	}
 	
 	private static class MenuButton extends StackPane {
 		private Text text;
 		
+
+		
 		public MenuButton(String name) {
 			text = new Text(name);
-			text.setFont(text.getFont().font(10));
+			text.setFont(Font.font ("Roboto", 20));
 			text.setFill(Color.WHITE);
 			
-			Rectangle bg = new Rectangle (200, 20);
+			Rectangle bg = new Rectangle (300, 50);
 			bg.setFill(Color.GREY);
 			
 			setAlignment(Pos.CENTER);
