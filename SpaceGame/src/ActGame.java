@@ -18,7 +18,10 @@ public class ActGame extends Application
 {
 	public static void main(String[] args)
 	{
-		launch(args);
+		launch(MainMenuGUI.class, args);
+		
+		
+		
 	}
 
 	static Scene mainScene;

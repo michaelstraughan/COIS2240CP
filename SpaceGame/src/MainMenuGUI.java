@@ -77,6 +77,7 @@ public class MainMenuGUI extends Application {
 			MenuButton btnStart = new MenuButton("START");
 			btnStart.setOnMouseClicked(event -> {
 
+				mainMenu.setVisible(false);
 				
 			});
 			
@@ -212,10 +213,5 @@ public class MainMenuGUI extends Application {
 			
 		}
 	}
-	
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 }
 
