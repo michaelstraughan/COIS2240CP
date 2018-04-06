@@ -20,7 +20,10 @@ import javafx.util.Duration;
 public class MainMenuGUI extends Application {
 
 	GameMenu mainMenu;
-
+	Stage mainMenuStage;
+	Stage gameStage;
+	Pane root = new Pane();
+	Pane root2 = new Pane();
 	
 	public static void main(String[] args)
 	{
@@ -33,7 +36,7 @@ public class MainMenuGUI extends Application {
 		mainMenuStage.setTitle("SPACING OUT");
 
 		
-		Pane root = new Pane();
+
 		
 		Scene scene = new Scene(root);
 		mainMenuStage.setScene(scene);
@@ -71,7 +74,7 @@ public class MainMenuGUI extends Application {
 			textTitle.setFont(Font.font ("Roboto", 40));
 			textTitle.setFill(Color.WHITE);
 			
-			Label lblScores = new Label("score placeholder");
+			Label lblScores = new Label("Highscore: " + ScoreTracker.GetHighScore());
 			lblScores.setFont(Font.font ("Roboto", 20));
 			lblScores.setTextFill(Color.WHITE);	
 			
@@ -89,6 +92,18 @@ public class MainMenuGUI extends Application {
 
 				//mainMenu.setVisible(false);
 				//mainMenuStage.setScene(scene2);
+				//ActGame launch = new ActGame();
+			    //mainMenuStage.setScene(ActGame.getMainScene());
+				
+				//Stage gamestage = new Stage();
+				//Scene gametest = new Scene(root2);
+				//gamestage.setScene(scene);
+				//gamestage.setWidth(600);
+				//mainMenuStage.setHeight(600);
+				//mainMenuStage.show();
+				//mainMenuStage.setResizable(false);
+				
+				//newWindow.setScene(ActGame.mainScene);
 				
 			});
 			

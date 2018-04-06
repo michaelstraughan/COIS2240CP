@@ -13,11 +13,11 @@ public class ScoreTracker {
 		if (highScore.equals(""))
 		{
 			//initiate
-			highScore = this.GetScores();
+			highScore = ScoreTracker.GetHighScore();
 		}
 	}
 	
-	public String GetScores() {
+	public static String GetHighScore() {
 	
 		FileReader readFile = null;
 		BufferedReader reader = null;
