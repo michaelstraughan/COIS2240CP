@@ -105,6 +105,7 @@ public class ActGame extends Application
 		else if (currentlyActiveKeys.contains("SPACE"))
 		{
 			Level.playerShoot();
+			Level.player.drawObject();
 		}
 		else
 		{

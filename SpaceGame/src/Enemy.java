@@ -12,12 +12,13 @@ import javafx.scene.image.Image;
 public class Enemy
 {
 
-	private double x, y, height, width;//Location, size
+	private Location location;
 	private boolean hitStatus = false, isEnemy = true;
 	private GraphicsContext graphicsContext; //scene for drawing
 	long start = System.nanoTime(), finish; // timer to restrict shooting, starts at the creation of the player
 
-	private Image sprite,explosion; //sprite of player
+	private Image objectSprite;
+	private Image explosion= new Image("file:explosion.png", 50, 50, false, false); //sprite of player
 	/*
 	 * -----------------------------------------------------------------------------------
 	 * Enemy constructor, sets the x and y coordinates as well as the scene it will be drawn on
@@ -26,64 +27,20 @@ public class Enemy
 
 	public Enemy(double x, double y, GraphicsContext graphicsContext)
 	{
-		this.x = x;
-		this.y = y;
-		sprite = new Image("file:AlienShip.png", 50, 50, false, false);
-		explosion= new Image("file:explosion.png", 50, 50, false, false);
-		setHeight(sprite.getHeight());
-		setWidth(sprite.getWidth());
+		setObjectSprite(new Image("file:AlienShip.png", 50, 50, false, false));
+		
+		setLocation(new Location(x, y,getObjectSprite().getHeight(),getObjectSprite().getWidth()));
+		
 		this.setGraphicsContext(graphicsContext);
-
 	}
-
 	/*
 	 * -----------------------------------------------------------------------------------
-	 * Getter method for X coordinate
+	 * Getter method for object sprite
 	 * -----------------------------------------------------------------------------------
 	 */
-	public double getX()
+	public Image getObjectSprite()
 	{
-		return x;
-	}
-
-	/*
-	 * -----------------------------------------------------------------------------------
-	 * Setter method for X coordinate
-	 * -----------------------------------------------------------------------------------
-	 */
-	public void setX(double x)
-	{
-		this.x = x;
-	}
-
-	/*
-	 * -----------------------------------------------------------------------------------
-	 * Getter method for Y coordinates
-	 * -----------------------------------------------------------------------------------
-	 */
-	public double getY()
-	{
-		return y;
-	}
-
-	/*
-	 * -----------------------------------------------------------------------------------
-	 * Setter method for Y coordinates
-	 * -----------------------------------------------------------------------------------
-	 */
-	public void setY(double y)
-	{
-		this.y = y;
-	}
-
-	/*
-	 * -----------------------------------------------------------------------------------
-	 * Getter method for image sprite
-	 * -----------------------------------------------------------------------------------
-	 */
-	public Image getSprite()
-	{
-		return sprite;
+		return objectSprite;
 	}
 
 	/*
@@ -91,9 +48,9 @@ public class Enemy
 	 * Setter method for image sprite
 	 * -----------------------------------------------------------------------------------
 	 */
-	public void setSprite(Image sprite)
+	public void setObjectSprite(Image objectSprite)
 	{
-		this.sprite = sprite;
+		this.objectSprite = objectSprite;
 	}
 
 	/*
@@ -106,7 +63,7 @@ public class Enemy
 		finish = System.nanoTime();
 		if (hitStatus == false)
 		{
-			getGraphicsContext().drawImage(getSprite(), getX(), getY());
+			getGraphicsContext().drawImage(getObjectSprite(), getLocation().getX(), getLocation().getY());
 		}
 		else if ((finish - start) / 10000000 <= 10)
 		{
@@ -125,7 +82,7 @@ public class Enemy
 	}
 	public void drawExplosion()
 	{
-			getGraphicsContext().drawImage(getExplosion(), getX(), getY());
+			getGraphicsContext().drawImage(getExplosion(), getLocation().getX(), getLocation().getY());
 	}
 
 	/*
@@ -136,8 +93,8 @@ public class Enemy
 
 	public void move(double moveX, double moveY)
 	{
-		x = x + moveX;
-		y = y + moveY;
+		getLocation().setX(getLocation().getX()+moveX);
+		getLocation().setY(getLocation().getY()+moveY);
 	}
 
 	/*
@@ -158,16 +115,16 @@ public class Enemy
 				{
 					for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++) //this for loop will loop through the entire bullet list
 					{
-						if (bullets.get(bulletNum).checkFired() == false) //if a bullet was set to not fired (Would have been set by the constructor or reset by Bullet methods)
+						if (bullets.get(bulletNum).getIsFired() == false) //if a bullet was set to not fired (Would have been set by the constructor or reset by Bullet methods)
 						{
 
-							bullets.get(bulletNum).fire(x, y, 1, isEnemy); //fire method will fire an already created bullet object
+							bullets.get(bulletNum).fire(getLocation().getX(), getLocation().getY(), 1, isEnemy); //fire method will fire an already created bullet object
 							start = System.nanoTime(); //starts timer again, generating the first time variable
 							return; //exits method
 						}
 					}
 
-					Bullet bullet = new Bullet(x, y, getGraphicsContext(), 1, isEnemy); //if no bullet has been found that is set to not fired it will create a new bullet
+					Bullet bullet = new Bullet(getLocation().getX(), getLocation().getY(), getGraphicsContext(), 1, isEnemy); //if no bullet has been found that is set to not fired it will create a new bullet
 					bullets.add(bullet); //this new bullet will be added to the bullet list
 
 					start = System.nanoTime(); //starts timer again, generating the first time variable
@@ -186,32 +143,12 @@ public class Enemy
 		return hitStatus;
 	}
 
-	public double getHeight()
-	{
-		return height;
-	}
-
-	public void setHeight(double height)
-	{
-		this.height = height;
-	}
-
-	public double getWidth()
-	{
-		return width;
-	}
-
-	public void setWidth(double width)
-	{
-		this.width = width;
-	}
-
-	public boolean getisEnemy()
+	public boolean getIsEnemy()
 	{
 		return isEnemy;
 	}
 
-	public void setisEnemy(boolean isEnemy)
+	public void setIsEnemy(boolean isEnemy)
 	{
 		this.isEnemy = isEnemy;
 	}
@@ -239,6 +176,16 @@ public class Enemy
 	public void setExplosion(Image explosion)
 	{
 		this.explosion = explosion;
+	}
+
+	public Location getLocation()
+	{
+		return location;
+	}
+
+	public void setLocation(Location location)
+	{
+		this.location = location;
 	}
 
 }

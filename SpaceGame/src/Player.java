@@ -14,29 +14,27 @@ public class Player extends Enemy
 	{
 		super(x, y, graphicsContext);
 		this.sceneWidth=sceneWidth;
-		Image sprite   = new Image(  "file:SpaceShip.png",50,50,false,false ); //its sprite is AlienShip
-		setSprite(sprite);
-		setHeight(sprite.getHeight());
-		setWidth(sprite.getWidth());
-		setisEnemy(false);
+		setObjectSprite(new Image(  "file:SpaceShip.png",50,50,false,false ));
+		setIsEnemy(false);
+		getLocation().setHeight(getObjectSprite().getHeight());
+		getLocation().setWidth(getObjectSprite().getWidth());
 	}
 	public void moveRight()
 	{
-		if(getX()<sceneWidth-getSprite().getWidth()){
-		setX(getX() + 3);
+		if(getLocation().getX()<sceneWidth-getObjectSprite().getWidth()){
+			getLocation().setX(getLocation().getX() + 3);
 		}
 		drawObject();
 	}
 	public void moveLeft()
 	{
-		if(getX()>0){
-		setX(getX() - 3);
+		if(getLocation().getX()>0){
+			getLocation().setX(getLocation().getX() - 3);
 		}
 		drawObject();
 	}
 	public void shoot(List<Bullet> bullets)
 	{
-		drawObject();
 		
 		finish = System.nanoTime(); //generates the second time variable
 		
@@ -44,16 +42,16 @@ public class Player extends Enemy
 		{
 			for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++) //this for loop will loop through the entire bullet list
 			{
-				if (bullets.get(bulletNum).checkFired() == false) //if a bullet was set to not fired (Would have been set by the constructor or reset by Bullet methods)
+				if (bullets.get(bulletNum).getIsFired() == false) //if a bullet was set to not fired (Would have been set by the constructor or reset by Bullet methods)
 				{
 					
-					bullets.get(bulletNum).fire(getX(), getY(), -1,getisEnemy()); //fire method will fire an already created bullet object
+					bullets.get(bulletNum).fire(getLocation().getX(), getLocation().getY(), -1,getIsEnemy()); //fire method will fire an already created bullet object
 					start = System.nanoTime(); //starts timer again, generating the first time variable
 					return; //exits method
 				}
 			}
 
-			Bullet bullet = new Bullet(getX(), getY(), getGraphicsContext(),-1,getisEnemy()); //if no bullet has been found that is set to not fired it will create a new bullet
+			Bullet bullet = new Bullet(getLocation().getX(), getLocation().getY(), getGraphicsContext(),-1,getIsEnemy()); //if no bullet has been found that is set to not fired it will create a new bullet
 			bullets.add(bullet); //this new bullet will be added to the bullet list
 			
 			start = System.nanoTime(); //starts timer again, generating the first time variable

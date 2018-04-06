@@ -10,8 +10,8 @@ import javafx.scene.image.Image;
 public class Bullet extends Enemy
 {
 	//The Bullet can be in two states, fired and not fired.
-	private boolean fired = false;
-	int direction;
+	private boolean fired;
+	private int direction;
 
 	/*
 	 * -----------------------------------------------------------------------------------
@@ -20,16 +20,15 @@ public class Bullet extends Enemy
 	 */
 	public Bullet(double x, double y, GraphicsContext graphicsContext, int direction, boolean isEnemy)
 	{
-		//+15 pixels makes the bullet shoot from the center of the Image
+		
 		super(x + 15, y, graphicsContext);
 
-		this.direction = direction;
-		fired = true; //bullet becomes 'fired' the moment its created
-		Image sprite = new Image("file:Bullet.png", 20, 20, false, false); //the bullet sprite
-		setisEnemy(isEnemy);
-		setSprite(sprite);
-		setHeight(sprite.getHeight());
-		setWidth(sprite.getWidth());
+		setDirection(direction);
+		setIsFired(true);
+		setIsEnemy(isEnemy);
+		setObjectSprite(new Image("file:Bullet.png", 20, 20, false, false));
+		getLocation().setHeight(getObjectSprite().getHeight());
+		getLocation().setWidth(getObjectSprite().getWidth());
 	}
 
 	/*
@@ -41,7 +40,7 @@ public class Bullet extends Enemy
 	public void move(int HEIGHT)
 	{
 		int direction;
-		if (getisEnemy() == false)
+		if (getIsEnemy() == false)
 		{
 			direction = -5;
 		}
@@ -49,9 +48,9 @@ public class Bullet extends Enemy
 		{
 			direction = 5;
 		}
-		if (getY() > (HEIGHT - HEIGHT) && getY() < HEIGHT && fired == true)
+		if (getLocation().getY() > (HEIGHT - HEIGHT) && getLocation().getY() < HEIGHT && fired == true)
 		{
-			setY(getY() + direction); //-1 indicates 1 unit moved upwards
+			getLocation().setY(getLocation().getY() + direction); //-1 indicates 1 unit moved upwards
 			drawObject();
 		}
 		else
@@ -65,10 +64,6 @@ public class Bullet extends Enemy
 	 * checkFired is the getter method for the state of fired
 	 * -----------------------------------------------------------------------------------
 	 */
-	public boolean checkFired()
-	{
-		return fired;
-	}
 
 	/*
 	 * -----------------------------------------------------------------------------------
@@ -77,11 +72,11 @@ public class Bullet extends Enemy
 	 */
 	public void fire(double x, double y, int direction, boolean isEnemy)
 	{
-		setX(x + 15);
-		setY(y);
+		getLocation().setX(x + 15);
+		getLocation().setY(y);
 		fired = true;
-		this.direction = direction;
-		setisEnemy(isEnemy);
+		this.setDirection(direction);
+		setIsEnemy(isEnemy);
 	}
 
 	/*
@@ -93,5 +88,24 @@ public class Bullet extends Enemy
 	public void reset()
 	{
 		fired = false;
+	}
+
+	public int getDirection()
+	{
+		return direction;
+	}
+
+	public void setDirection(int direction)
+	{
+		this.direction = direction;
+	}
+	public boolean getIsFired()
+	{
+		return fired;
+	}
+
+	public void setIsFired(boolean fired)
+	{
+		this.fired = fired;
 	}
 }
