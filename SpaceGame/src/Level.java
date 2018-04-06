@@ -12,41 +12,44 @@ public class Level
 	static Player player;
 	static List<Bullet> bullets;
 	static Enemy[] enemies;
-	static int WIDTH, HEIGHT, score=0, enemyDirection = 0;
+	static int WIDTH, HEIGHT, score = 0, lives = 3, enemyDirection = 0;
 	static Background Background;
 	static GraphicsContext graphicsContext;
 
 	public Level(GraphicsContext graphicsContext, int WIDTH, int HEIGHT)
 	{
+		this.WIDTH = WIDTH;
+		this.HEIGHT = HEIGHT;
+		this.graphicsContext = graphicsContext;
+		
 		player = new Player(WIDTH / 2, HEIGHT - 100, graphicsContext, WIDTH);
 		bullets = new ArrayList<Bullet>();
 		enemies = new Enemy[50];
-		layoutEnemies(graphicsContext);
-		this.WIDTH = WIDTH;
-		this.HEIGHT = HEIGHT;
-		this.graphicsContext=graphicsContext;
+		layoutEnemies();
+		
 		Background = new Background(graphicsContext, HEIGHT, WIDTH);
-		  Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 24 );
-		  graphicsContext.setFont( theFont );
-		  graphicsContext.setFill( Color.WHITE );
-		  graphicsContext.setLineWidth(1);
+		Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
+		graphicsContext.setFont(theFont);
+		graphicsContext.setFill(Color.WHITE);
+		graphicsContext.setLineWidth(1);
 
 	}
 
 	public static void update()
 	{
 		updateBackground();
-		updateScore();
+		updateInformation();
 		updateBullets();
 		checkHitStatus();
 		updateEnemies();
-		
+
 	}
 
-	private static void updateScore()
+	private static void updateInformation()
 	{
-		graphicsContext.fillText("Score: " + score,400,20);
-		
+		graphicsContext.fillText("Score: " + score, 10, 20);
+		graphicsContext.fillText("Lives: " + lives, 500, 20);
+
 	}
 
 	public static void updateEnemies()
@@ -55,7 +58,7 @@ public class Level
 
 		for (int count = 0; count < enemies.length; count++)
 		{
-			
+
 			if (count == 0)
 			{
 				if (enemies[count].getX() < 0)
@@ -77,7 +80,7 @@ public class Level
 				moveX = 1;
 				moveY = 0.1;
 			}
-			
+
 			enemies[count].shoot(bullets);
 			enemies[count].move(moveX, moveY);
 			enemies[count].drawObject();
@@ -104,7 +107,7 @@ public class Level
 		player.shoot(bullets);
 	}
 
-	public static void layoutEnemies(GraphicsContext graphicsContext)
+	public static void layoutEnemies()
 	{
 		int x = 45, y = 25, startX = x;
 		enemies[0] = new Enemy(x, y, graphicsContext);
@@ -128,30 +131,37 @@ public class Level
 		for (int count2 = 0; count2 < bullets.size(); count2++) //will cycle through the bullet list
 		{
 			// this if statement takes the bullets location and determines if it shares a domain with the image and makes the enemy disappear
-			if (bullets.get(count2).getisEnemy()==true&&bullets.get(count2).checkFired() == true && player.getHitStatus() == false
-					&& bullets.get(count2).getX() < player.getX() + 50
-					&& bullets.get(count2).getX() > player.getX()
-					&& bullets.get(count2).getY() > player.getY()+20  )
+			if (bullets.get(count2).getisEnemy() == true && bullets.get(count2).checkFired() == true
+					&& player.getHitStatus() == false && bullets.get(count2).getX() < player.getX() + 50
+					&& bullets.get(count2).getX() > player.getX() && bullets.get(count2).getY() > player.getY() + 20)
 			{
+
 				player.setHitStatus(true);
+				lives = lives - 1;
+				player.startTime();
 				bullets.get(count2).reset();
 			}
 		}
-		for(int count = 0; count < enemies.length; count++){
-		for (int count2 = 0; count2 < bullets.size(); count2++) //will cycle through the bullet list
+		for (int count = 0; count < enemies.length; count++)
 		{
-			// this if statement takes the bullets location and determines if it shares a domain with the image and makes the enemy disappear
-			if (bullets.get(count2).getisEnemy()==false&&bullets.get(count2).checkFired() == true && enemies[count].getHitStatus() == false
-					&& bullets.get(count2).getX() < enemies[count].getX() + 50
-					&& bullets.get(count2).getX() > enemies[count].getX()
-					&& bullets.get(count2).getY() < enemies[count].getY()+20  )
+			for (int count2 = 0; count2 < bullets.size(); count2++) //will cycle through the bullet list
 			{
-				enemies[count].setHitStatus(true);
-				score=score+50;
-				bullets.get(count2).reset();
+				// this if statement takes the bullets location and determines if it shares a domain with the image and makes the enemy disappear
+				if (bullets.get(count2).getisEnemy() == false && bullets.get(count2).checkFired() == true
+						&& enemies[count].getHitStatus() == false
+						&& bullets.get(count2).getX() < enemies[count].getX() + 50
+						&& bullets.get(count2).getX() > enemies[count].getX()
+						&& bullets.get(count2).getY() < enemies[count].getY() + 20)
+				{
+					enemies[count].startTime();
+					enemies[count].setHitStatus(true);
+					//layoutEnemies();
+					score = score + 50;
+					bullets.get(count2).reset();
+				}
 			}
 		}
-		}
+		
 
 	}
 

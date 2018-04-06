@@ -17,7 +17,7 @@ public class Enemy
 	private GraphicsContext graphicsContext; //scene for drawing
 	long start = System.nanoTime(), finish; // timer to restrict shooting, starts at the creation of the player
 
-	private Image sprite; //sprite of player
+	private Image sprite,explosion; //sprite of player
 	/*
 	 * -----------------------------------------------------------------------------------
 	 * Enemy constructor, sets the x and y coordinates as well as the scene it will be drawn on
@@ -29,6 +29,7 @@ public class Enemy
 		this.x = x;
 		this.y = y;
 		sprite = new Image("file:AlienShip.png", 50, 50, false, false);
+		explosion= new Image("file:explosion.png", 50, 50, false, false);
 		setHeight(sprite.getHeight());
 		setWidth(sprite.getWidth());
 		this.setGraphicsContext(graphicsContext);
@@ -102,10 +103,29 @@ public class Enemy
 	 */
 	public void drawObject()
 	{
+		finish = System.nanoTime();
 		if (hitStatus == false)
 		{
 			getGraphicsContext().drawImage(getSprite(), getX(), getY());
 		}
+		else if ((finish - start) / 10000000 <= 10)
+		{
+			drawExplosion();
+		}
+		else
+		{
+			if (isEnemy==false){
+				for (double wait = 0; wait <= 500000000; wait++)
+				{
+				}
+				setHitStatus(false);
+			}
+			
+		}
+	}
+	public void drawExplosion()
+	{
+			getGraphicsContext().drawImage(getExplosion(), getX(), getY());
 	}
 
 	/*
@@ -114,10 +134,10 @@ public class Enemy
 	 * -----------------------------------------------------------------------------------
 	 */
 
-	public void move(double moveX,double moveY)
+	public void move(double moveX, double moveY)
 	{
-		x=x+moveX;
-		y=y+moveY;
+		x = x + moveX;
+		y = y + moveY;
 	}
 
 	/*
@@ -127,34 +147,40 @@ public class Enemy
 	 */
 	public void shoot(List<Bullet> bullets)
 	{
-		double shootProb=(Math.random());
-		if(shootProb<0.0003333){
-		finish = System.nanoTime(); //generates the second time variable
-
-		if ((finish - start) / 10000000 >= 50) // if the time from the last shot is greater than or equal to 50 milliseconds, restricts the players shot
+		double shootProb = (Math.random());
+		if (hitStatus == false)
 		{
-			for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++) //this for loop will loop through the entire bullet list
+			if (shootProb < 0.0003333)
 			{
-				if (bullets.get(bulletNum).checkFired() == false) //if a bullet was set to not fired (Would have been set by the constructor or reset by Bullet methods)
-				{
+				finish = System.nanoTime(); //generates the second time variable
 
-					bullets.get(bulletNum).fire(x, y, 1,isEnemy); //fire method will fire an already created bullet object
+				if ((finish - start) / 10000000 >= 50) // if the time from the last shot is greater than or equal to 50 milliseconds, restricts the players shot
+				{
+					for (int bulletNum = 0; bulletNum < bullets.size(); bulletNum++) //this for loop will loop through the entire bullet list
+					{
+						if (bullets.get(bulletNum).checkFired() == false) //if a bullet was set to not fired (Would have been set by the constructor or reset by Bullet methods)
+						{
+
+							bullets.get(bulletNum).fire(x, y, 1, isEnemy); //fire method will fire an already created bullet object
+							start = System.nanoTime(); //starts timer again, generating the first time variable
+							return; //exits method
+						}
+					}
+
+					Bullet bullet = new Bullet(x, y, getGraphicsContext(), 1, isEnemy); //if no bullet has been found that is set to not fired it will create a new bullet
+					bullets.add(bullet); //this new bullet will be added to the bullet list
+
 					start = System.nanoTime(); //starts timer again, generating the first time variable
-					return; //exits method
 				}
 			}
-
-			Bullet bullet = new Bullet(x, y, getGraphicsContext(), 1,isEnemy); //if no bullet has been found that is set to not fired it will create a new bullet
-			bullets.add(bullet); //this new bullet will be added to the bullet list
-
-			start = System.nanoTime(); //starts timer again, generating the first time variable
-		}
 		}
 	}
+
 	public void setHitStatus(boolean hitStatus)
 	{
 		this.hitStatus = hitStatus;
 	}
+
 	public boolean getHitStatus()
 	{
 		return hitStatus;
@@ -198,6 +224,21 @@ public class Enemy
 	public void setGraphicsContext(GraphicsContext graphicsContext)
 	{
 		this.graphicsContext = graphicsContext;
+	}
+
+	public void startTime()
+	{
+		start = System.nanoTime();
+	}
+
+	public Image getExplosion()
+	{
+		return explosion;
+	}
+
+	public void setExplosion(Image explosion)
+	{
+		this.explosion = explosion;
 	}
 
 }

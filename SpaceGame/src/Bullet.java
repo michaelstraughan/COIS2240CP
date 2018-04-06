@@ -43,11 +43,11 @@ public class Bullet extends Enemy
 		int direction;
 		if (getisEnemy() == false)
 		{
-			direction = -1;
+			direction = -5;
 		}
 		else
 		{
-			direction = 1;
+			direction = 5;
 		}
 		if (getY() > (HEIGHT - HEIGHT) && getY() < HEIGHT && fired == true)
 		{

@@ -23,14 +23,14 @@ public class Player extends Enemy
 	public void moveRight()
 	{
 		if(getX()<sceneWidth-getSprite().getWidth()){
-		setX(getX() + 1);
+		setX(getX() + 3);
 		}
 		drawObject();
 	}
 	public void moveLeft()
 	{
 		if(getX()>0){
-		setX(getX() - 1);
+		setX(getX() - 3);
 		}
 		drawObject();
 	}
