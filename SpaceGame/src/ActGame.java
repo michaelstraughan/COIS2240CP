@@ -16,27 +16,28 @@ import java.util.List;
 
 public class ActGame extends Application
 {
-	
+	public static void main(String[] args)
+	{
+		launch(args);
+	}
+
 	static Scene mainScene;
 	static GraphicsContext graphicsContext;
 	static int WIDTH = 600;
 	static int HEIGHT = 600;
 	static HashSet<String> currentlyActiveKeys;
 	static Level level;
-	
 	@Override
 	public void start(Stage mainStage)
 	{
 		mainStage.setTitle("Event Handling");
 
-		
-		
-		Group rootGroup = new Group();
-		mainScene = new Scene(rootGroup,WIDTH,HEIGHT,Color.BLACK);
+		Group root = new Group();
+		mainScene = new Scene(root,WIDTH,HEIGHT,Color.BLACK);
 		mainStage.setScene(mainScene);
 
 		Canvas canvas = new Canvas(WIDTH, HEIGHT);
-		rootGroup.getChildren().add(canvas);
+		root.getChildren().add(canvas);
 
 		prepareActionHandlers();
 
@@ -57,7 +58,6 @@ public class ActGame extends Application
 		
 		mainStage.show();
 	}
-	
 
 	private static void prepareActionHandlers()
 	{
@@ -112,9 +112,5 @@ public class ActGame extends Application
 		
 	}
 
-	public static Scene getMainScene() {
-		return mainScene;
-	}
-	
-	
+
 }
