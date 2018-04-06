@@ -16,14 +16,7 @@ import java.util.List;
 
 public class ActGame extends Application
 {
-	public static void main(String[] args)
-	{
-		launch(MainMenuGUI.class, args);
-		
-		
-		
-	}
-
+	
 	static Scene mainScene;
 	static GraphicsContext graphicsContext;
 	static int WIDTH = 600;
@@ -35,6 +28,8 @@ public class ActGame extends Application
 	{
 		mainStage.setTitle("Event Handling");
 
+		
+		
 		Group root = new Group();
 		mainScene = new Scene(root,WIDTH,HEIGHT,Color.BLACK);
 		mainStage.setScene(mainScene);

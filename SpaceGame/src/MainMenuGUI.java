@@ -24,6 +24,7 @@ public class MainMenuGUI extends Application {
 	@Override
 	public void start(Stage mainMenuStage) throws Exception {
 		mainMenuStage.setTitle("SPACING OUT");
+		mainMenuStage.setResizable(false);
 		
 		Pane root = new Pane();
 		root.setPrefSize(600, 600);
@@ -78,6 +79,7 @@ public class MainMenuGUI extends Application {
 			btnStart.setOnMouseClicked(event -> {
 
 				mainMenu.setVisible(false);
+				
 				
 			});
 			
