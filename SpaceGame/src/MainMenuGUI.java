@@ -31,15 +31,16 @@ public class MainMenuGUI extends Application {
 	@Override
 	public void start(Stage mainMenuStage) throws Exception {
 		mainMenuStage.setTitle("SPACING OUT");
-		mainMenuStage.setResizable(false);
+
 		
 		Pane root = new Pane();
-		root.setPrefSize(600, 600);
 		
 		Scene scene = new Scene(root);
 		mainMenuStage.setScene(scene);
+		mainMenuStage.setWidth(600);
+		mainMenuStage.setHeight(600);
 		mainMenuStage.show();
-		
+		mainMenuStage.setResizable(false);
 		mainMenu = new GameMenu();
 		
 		root.getChildren().addAll(mainMenu);
@@ -224,4 +225,3 @@ public class MainMenuGUI extends Application {
 		}
 	}
 }
-

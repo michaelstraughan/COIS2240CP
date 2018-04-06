@@ -43,7 +43,7 @@ public class Launcher extends Application {
 
 		
 		gameStage.setTitle("SPACING OUT");
-		gameStage.setResizable(false);
+		//gameStage.setResizable(false);
 		gameStage.setScene(menuScene);
 		gameStage.show();
 		
