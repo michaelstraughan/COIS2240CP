@@ -23,6 +23,7 @@ public class ActGame extends Application
 	static int HEIGHT = 600;
 	static HashSet<String> currentlyActiveKeys;
 	static Level level;
+	
 	@Override
 	public void start(Stage mainStage)
 	{

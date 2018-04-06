@@ -87,7 +87,7 @@ public class MainMenuGUI extends Application {
 			btnStart.setOnMouseClicked(event -> {
 
 				//mainMenu.setVisible(false);
-				//mainMenuStage.setScene();
+				//mainMenuStage.setScene(scene2);
 				
 			});
 			
@@ -136,8 +136,8 @@ public class MainMenuGUI extends Application {
 			});
 			
 			
-			MenuButton btnBack = new MenuButton("BACK");
-			btnBack.setOnMouseClicked(event -> {
+			MenuButton btnBackScores = new MenuButton("BACK");
+			btnBackScores.setOnMouseClicked(event -> {
 				getChildren().add(menuMain);
 				
 				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menuScores);
@@ -156,8 +156,8 @@ public class MainMenuGUI extends Application {
 			});
 			
 			
-			MenuButton btnBack2 = new MenuButton("BACK");
-			btnBack2.setOnMouseClicked(event -> {
+			MenuButton btnBackControls = new MenuButton("BACK");
+			btnBackControls.setOnMouseClicked(event -> {
 				getChildren().add(menuMain);
 				
 				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menuControls);
@@ -176,8 +176,8 @@ public class MainMenuGUI extends Application {
 			});
 			
 			menuMain.getChildren().addAll(textTitle, btnStart, btnScores, btnControls, btnExit);
-			menuScores.getChildren().addAll(lblScores, btnBack);
-			menuControls.getChildren().addAll(lblControls, btnBack2);
+			menuScores.getChildren().addAll(lblScores, btnBackScores);
+			menuControls.getChildren().addAll(lblControls, btnBackControls);
 			
 			
 			Rectangle bg = new Rectangle (600, 600);
