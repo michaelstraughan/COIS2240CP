@@ -21,12 +21,12 @@ public class Level
 		this.WIDTH = WIDTH;
 		this.HEIGHT = HEIGHT;
 		this.graphicsContext = graphicsContext;
-		
+
 		player = new Player(WIDTH / 2, HEIGHT - 100, graphicsContext, WIDTH);
 		bullets = new ArrayList<Bullet>();
 		enemies = new Enemy[50];
 		layoutEnemies();
-		
+
 		Background = new Background(graphicsContext, HEIGHT, WIDTH);
 		Font theFont = Font.font("Helvetica", FontWeight.BOLD, 24);
 		graphicsContext.setFont(theFont);
@@ -138,6 +138,10 @@ public class Level
 
 				player.setHitStatus(true);
 				lives = lives - 1;
+				for (int count = 0; count < bullets.size(); count++)
+				{
+					bullets.get(count).reset();
+				}
 				player.startTime();
 				bullets.get(count2).reset();
 			}
@@ -155,14 +159,35 @@ public class Level
 				{
 					enemies[count].startTime();
 					enemies[count].setHitStatus(true);
-					//layoutEnemies();
 					score = score + 50;
 					bullets.get(count2).reset();
 				}
 			}
 		}
-		
+		int check = 0;
+		for (int count = 0; count < enemies.length; count++)
+		{
+			if (enemies[count].getHitStatus() == true)
+			{
+				check++;
 
+			}
+		}
+		if (check == enemies.length)
+		{
+			for (int count = 0; count < bullets.size(); count++)
+			{
+				bullets.get(count).reset();
+			}
+			layoutEnemies();
+			lives++;
+
+		}
+
+	}
+
+	public static void resetScreen()
+	{
 	}
 
 }

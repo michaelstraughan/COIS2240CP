@@ -89,6 +89,7 @@ public class Bullet extends Enemy
 	 * reset method resets the fired variable to false, and will be dealt within next frame render if statements
 	 * -----------------------------------------------------------------------------------
 	 */
+	
 	public void reset()
 	{
 		fired = false;
