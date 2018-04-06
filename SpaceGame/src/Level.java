@@ -23,7 +23,7 @@ public class Level
 		this.HEIGHT = HEIGHT;
 		this.graphicsContext = graphicsContext;
 
-		player = new Player(WIDTH / 2, HEIGHT - 100, graphicsContext, WIDTH);
+		player = new Player(WIDTH / 2, HEIGHT - 100, graphicsContext);
 		bullets = new ArrayList<Bullet>();
 		enemies = new Enemy[50];
 		layoutEnemies();

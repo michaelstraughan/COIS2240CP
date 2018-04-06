@@ -9,11 +9,9 @@ import javafx.scene.paint.Color;
  */
 public class Player extends Enemy
 {
-   int sceneWidth;
-	public Player(double x, double y, GraphicsContext graphicsContext, int sceneWidth)
+	public Player(double x, double y, GraphicsContext graphicsContext)
 	{
 		super(x, y, graphicsContext);
-		this.sceneWidth=sceneWidth;
 		setObjectSprite(new Image(  "file:SpaceShip.png",50,50,false,false ));
 		setIsEnemy(false);
 		getLocation().setHeight(getObjectSprite().getHeight());
@@ -21,7 +19,7 @@ public class Player extends Enemy
 	}
 	public void moveRight()
 	{
-		if(getLocation().getX()<sceneWidth-getObjectSprite().getWidth()){
+		if(getLocation().getX()<550){
 			getLocation().setX(getLocation().getX() + 3);
 		}
 		drawObject();
