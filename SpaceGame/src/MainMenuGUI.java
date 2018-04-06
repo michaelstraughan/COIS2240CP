@@ -19,7 +19,14 @@ import javafx.util.Duration;
 
 public class MainMenuGUI extends Application {
 
-	private GameMenu mainMenu;
+	GameMenu mainMenu;
+
+	
+	public static void main(String[] args)
+	{
+		launch(args);
+		
+	}
 	
 	@Override
 	public void start(Stage mainMenuStage) throws Exception {
@@ -38,25 +45,26 @@ public class MainMenuGUI extends Application {
 		root.getChildren().addAll(mainMenu);
 			
 		}
+
 	
-
-
+	
+	
 	private class GameMenu extends Parent {
 		public GameMenu() {
 			
-			VBox menu0 = new VBox(10);
-			menu0.setAlignment(Pos.CENTER);
-			menu0.setTranslateX(150);
+			VBox menuMain = new VBox(10);
+			menuMain.setAlignment(Pos.CENTER);
+			menuMain.setTranslateX(150);
 			
-			VBox menu1 = new VBox(10);
-			menu1.setAlignment(Pos.CENTER);
-			menu1.setTranslateX(150);
-			menu1.setTranslateY(1000);
+			VBox menuScores = new VBox(10);
+			menuScores.setAlignment(Pos.CENTER);
+			menuScores.setTranslateX(150);
+			menuScores.setTranslateY(1000);
 			
-			VBox menu2 = new VBox(10);
-			menu2.setAlignment(Pos.CENTER);
-			menu2.setTranslateX(150);
-			menu2.setTranslateY(1000);
+			VBox menuControls = new VBox(10);
+			menuControls.setAlignment(Pos.CENTER);
+			menuControls.setTranslateX(150);
+			menuControls.setTranslateY(1000);
 			
 			Text textTitle = new Text("SPACING OUT");
 			textTitle.setFont(Font.font ("Roboto", 40));
@@ -71,52 +79,52 @@ public class MainMenuGUI extends Application {
 			lblControls.setFont(Font.font ("Roboto", 20));
 			lblControls.setTextFill(Color.WHITE);		
 			
-			menu0.setMargin(textTitle, new Insets(100,0,100,0));
-			menu1.setMargin(lblScores, new Insets(100,0,100,0));			
-			menu2.setMargin(lblControls, new Insets(100,0,100,0));
+			menuMain.setMargin(textTitle, new Insets(100,0,100,0));
+			menuScores.setMargin(lblScores, new Insets(100,0,100,0));			
+			menuControls.setMargin(lblControls, new Insets(100,0,100,0));
 			
 			MenuButton btnStart = new MenuButton("START");
 			btnStart.setOnMouseClicked(event -> {
 
-				mainMenu.setVisible(false);
-				
+				//mainMenu.setVisible(false);
+				//mainMenuStage.setScene();
 				
 			});
 			
 			MenuButton btnScores = new MenuButton("SCORES");
 			btnScores.setOnMouseClicked(event -> {
-				getChildren().add(menu1);
+				getChildren().add(menuScores);
 				
-				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu0);
+				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menuMain);
 				tt.setToY(1000);
 				
-				TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu1);
+				TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menuScores);
 				tt1.setToY(0);
 				
 				tt.play();
 				tt1.play();
 				
 				tt.setOnFinished(evt -> {
-				getChildren().remove(menu0);
+				getChildren().remove(menuMain);
 				});
 				
 			});
 			
 			MenuButton btnControls = new MenuButton("CONTROLS");
 			btnControls.setOnMouseClicked(event -> {
-				getChildren().add(menu2);
+				getChildren().add(menuControls);
 				
-				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu0);
+				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menuMain);
 				tt.setToY(1000);
 				
-				TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu2);
+				TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menuControls);
 				tt1.setToY(0);
 				
 				tt.play();
 				tt1.play();
 				
 				tt.setOnFinished(evt -> {
-				getChildren().remove(menu0);
+				getChildren().remove(menuMain);
 				});
 				
 			});
@@ -130,19 +138,19 @@ public class MainMenuGUI extends Application {
 			
 			MenuButton btnBack = new MenuButton("BACK");
 			btnBack.setOnMouseClicked(event -> {
-				getChildren().add(menu0);
+				getChildren().add(menuMain);
 				
-				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
+				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menuScores);
 				tt.setToY(1000);
 				
-				TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu0);
+				TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menuMain);
 				tt1.setToY(0);
 				
 				tt.play();
 				tt1.play();
 				
 				tt.setOnFinished(evt -> {
-				getChildren().remove(menu1);
+				getChildren().remove(menuScores);
 				});
 				
 			});
@@ -150,31 +158,31 @@ public class MainMenuGUI extends Application {
 			
 			MenuButton btnBack2 = new MenuButton("BACK");
 			btnBack2.setOnMouseClicked(event -> {
-				getChildren().add(menu0);
+				getChildren().add(menuMain);
 				
-				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu2);
+				TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menuControls);
 				tt.setToY(1000);
 				
-				TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu0);
+				TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menuMain);
 				tt1.setToY(0);
 				
 				tt.play();
 				tt1.play();
 				
 				tt.setOnFinished(evt -> {
-				getChildren().remove(menu2);
+				getChildren().remove(menuControls);
 				});
 				
 			});
 			
-			menu0.getChildren().addAll(textTitle, btnStart, btnScores, btnControls, btnExit);
-			menu1.getChildren().addAll(lblScores, btnBack);
-			menu2.getChildren().addAll(lblControls, btnBack2);
+			menuMain.getChildren().addAll(textTitle, btnStart, btnScores, btnControls, btnExit);
+			menuScores.getChildren().addAll(lblScores, btnBack);
+			menuControls.getChildren().addAll(lblControls, btnBack2);
 			
 			
 			Rectangle bg = new Rectangle (600, 600);
 		
-			getChildren().addAll(bg, menu0);
+			getChildren().addAll(bg, menuMain);
 						
 			
 			
