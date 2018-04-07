@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +22,7 @@ public class Level
 	static Background Background;
 	static GraphicsContext graphicsContext;
 	static Boolean gameOver = false;
+	private static String highScore = "0";
 
 	public Level(GraphicsContext graphicsContext, int WIDTH, int HEIGHT)
 	{
@@ -49,8 +56,84 @@ public class Level
 		else
 		{
 			gameOver();
+			
+			CheckScore();
+			if (highScore.equals("0"))
+			{
+				//initiate
+				highScore = Level.GetHighScore();
+			}
+			
+			
 		}
 
+	}
+	
+	public static void CheckScore()
+	{
+		if (score > Integer.parseInt(highScore))
+		{
+			highScore = String.valueOf(score);
+			File scoreFile = new File("highscore.dat");
+			if (!scoreFile.exists())
+			{
+				try {
+					scoreFile.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			FileWriter writeFile = null;
+			BufferedWriter writer = null;
+			try
+			{
+				writeFile = new FileWriter(scoreFile);
+				writer = new BufferedWriter(writeFile);
+				writer.write(highScore);
+			}
+			catch (Exception e)
+			{
+				
+			}
+			finally
+			{
+				if (writer != null)
+				{
+					try {
+						writer.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+	
+	public static String GetHighScore() {
+		
+		FileReader readFile = null;
+		BufferedReader reader = null;
+		
+		try
+		{
+		readFile = new FileReader("highscore.dat");
+		reader = new BufferedReader(readFile);
+		return reader.readLine();
+		
+		}
+		catch (Exception e)
+		{
+			return "0";
+		}
+		finally
+		{
+			try {
+				if (reader != null)
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+		}
 	}
 
 	private static void updateInformation()

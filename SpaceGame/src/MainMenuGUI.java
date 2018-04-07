@@ -78,7 +78,7 @@ public class MainMenuGUI extends Application {
 			textTitle.setFont(Font.font ("Roboto", 40));
 			textTitle.setFill(Color.WHITE);
 			
-			Label lblScores = new Label("Highscore: " + ScoreTracker.GetHighScore());
+			Label lblScores = new Label("Highscore: " + Level.GetHighScore());
 			lblScores.setFont(Font.font ("Roboto", 20));
 			lblScores.setTextFill(Color.WHITE);	
 			
