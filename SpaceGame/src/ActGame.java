@@ -2,6 +2,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,12 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class ActGame extends Application
+public class ActGame extends Parent
 {
-	public static void main(String[] args)
-	{
-		launch(args);
-	}
 
 	static Scene mainScene;
 	static GraphicsContext graphicsContext;
@@ -27,9 +24,13 @@ public class ActGame extends Application
 	static int HEIGHT = 600;
 	static HashSet<String> currentlyActiveKeys;
 	static Level level;
-	@Override
-	public void start(Stage mainStage)
+	private final Stage mainStage;
+	
+	public ActGame()
 	{
+		
+		mainStage = new Stage();
+		
 		mainStage.setTitle("Space Game");
 
 		Group root = new Group();
@@ -58,6 +59,11 @@ public class ActGame extends Application
 		
 		mainStage.show();
 	}
+	
+	public Stage getMainStage() {
+		return mainStage;
+	}
+	
 
 	private static void prepareActionHandlers()
 	{

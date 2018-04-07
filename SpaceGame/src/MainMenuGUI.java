@@ -23,7 +23,6 @@ public class MainMenuGUI extends Application {
 	Stage mainMenuStage;
 	Stage gameStage;
 	Pane root = new Pane();
-	Pane root2 = new Pane();
 	
 	public static void main(String[] args)
 	{
@@ -33,6 +32,9 @@ public class MainMenuGUI extends Application {
 	
 	@Override
 	public void start(Stage mainMenuStage) throws Exception {
+		
+		this.mainMenuStage = mainMenuStage;
+		
 		mainMenuStage.setTitle("SPACING OUT");
 
 		
@@ -47,13 +49,15 @@ public class MainMenuGUI extends Application {
 		mainMenu = new GameMenu();
 		
 		root.getChildren().addAll(mainMenu);
+		
+		
 			
 		}
+	
 
 	
 	
-	
-	private class GameMenu extends Parent {
+	public class GameMenu extends Parent {
 		public GameMenu() {
 			
 			VBox menuMain = new VBox(10);
@@ -83,28 +87,20 @@ public class MainMenuGUI extends Application {
 			lblControls.setFont(Font.font ("Roboto", 20));
 			lblControls.setTextFill(Color.WHITE);		
 			
-			menuMain.setMargin(textTitle, new Insets(100,0,100,0));
-			menuScores.setMargin(lblScores, new Insets(100,0,100,0));			
-			menuControls.setMargin(lblControls, new Insets(100,0,100,0));
+			VBox.setMargin(textTitle, new Insets(100,0,100,0));
+			VBox.setMargin(lblScores, new Insets(100,0,100,0));			
+			VBox.setMargin(lblControls, new Insets(100,0,100,0));
 			
 			MenuButton btnStart = new MenuButton("START");
 			btnStart.setOnMouseClicked(event -> {
+				
+				ActGame game = new ActGame();
+				
+				mainMenuStage.close();
 
-				//mainMenu.setVisible(false);
-				//mainMenuStage.setScene(scene2);
-				//ActGame launch = new ActGame();
-			    //mainMenuStage.setScene(ActGame.getMainScene());
-				
-				//Stage gamestage = new Stage();
-				//Scene gametest = new Scene(root2);
-				//gamestage.setScene(scene);
-				//gamestage.setWidth(600);
-				//mainMenuStage.setHeight(600);
-				//mainMenuStage.show();
-				//mainMenuStage.setResizable(false);
-				
-				//newWindow.setScene(ActGame.mainScene);
-				
+				game.getMainStage().show();
+
+
 			});
 			
 			MenuButton btnScores = new MenuButton("SCORES");
