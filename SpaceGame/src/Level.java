@@ -22,6 +22,8 @@ public class Level
 	static Background Background;
 	static GraphicsContext graphicsContext;
 	static Boolean gameOver = false;
+	
+	//Initiate a highscore string variable
 	private static String highScore = "0";
 
 	public Level(GraphicsContext graphicsContext, int WIDTH, int HEIGHT)
@@ -40,6 +42,13 @@ public class Level
 		graphicsContext.setFont(theFont);
 		graphicsContext.setFill(Color.WHITE);
 		graphicsContext.setLineWidth(1);
+		
+		//This keeps the highscore from being overwritten each time the game is launched.
+		if (highScore.equals("0"))
+		{
+			
+			highScore = Level.GetHighScore();
+		}
 
 	}
 
@@ -57,36 +66,54 @@ public class Level
 		{
 			gameOver();
 			
+			//When the game ends, CheckScore runs, comparing the player's
+			//score to the saved highscore and updating the 
+			//highscore if necessary.
 			CheckScore();
-			if (highScore.equals("0"))
-			{
-				//initiate
-				highScore = Level.GetHighScore();
-			}
 			
 			
 		}
 
 	}
 	
+/*
+ * -----------------------------------------------------------------------------------
+ * CheckScore compares the players score at the end of the game to the currently saved
+ * highscore. If the player's score is higher, the highscore is updated.
+ * CheckScore was adapted from 
+ * BrandonioProduction's video: https://www.youtube.com/watch?v=8gMd0ftWp_Y
+ * -----------------------------------------------------------------------------------
+ */		
 	public static void CheckScore()
 	{
+		//Compare the player's score to the saved highscore, converting the highscore
+		//string into an int for easy comparison.
 		if (score > Integer.parseInt(highScore))
 		{
+			//if the player score is higher, set the highscore to that new value
 			highScore = String.valueOf(score);
+			//Prepare to write to the highscore.dat file
 			File scoreFile = new File("highscore.dat");
+			
+			//Before writing to the file, check if it exists, if not, create it.
 			if (!scoreFile.exists())
 			{
+				//Try/catch to handle errors!
 				try {
 					scoreFile.createNewFile();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
+			
+			//Prepare the filewriters
 			FileWriter writeFile = null;
 			BufferedWriter writer = null;
+			
+			//Try/catch exceptions, just in case.
 			try
 			{
+				//Write the new highscore to the highscore file
 				writeFile = new FileWriter(scoreFile);
 				writer = new BufferedWriter(writeFile);
 				writer.write(highScore);
@@ -95,6 +122,7 @@ public class Level
 			{
 				
 			}
+			//If a filewriter is open, close it, handling errors along the way.
 			finally
 			{
 				if (writer != null)
@@ -108,14 +136,25 @@ public class Level
 			}
 		}
 	}
+
 	
+/*
+ * -----------------------------------------------------------------------------------
+ * GetHighScore is used in the score menu to display the locally stored highscore.
+ * Like CheckScore, GetHighScore was adapted from 
+ * BrandonioProduction's video: https://www.youtube.com/watch?v=8gMd0ftWp_Y
+ * -----------------------------------------------------------------------------------
+ */	
 	public static String GetHighScore() {
 		
+		//Initialize filereaders for later use
 		FileReader readFile = null;
 		BufferedReader reader = null;
 		
 		try
 		{
+			
+		//the highscore.dat file is read and the contents are returned.
 		readFile = new FileReader("highscore.dat");
 		reader = new BufferedReader(readFile);
 		return reader.readLine();
@@ -123,8 +162,12 @@ public class Level
 		}
 		catch (Exception e)
 		{
+			//If there is an error reading the file, like if it does not 
+			//exist, a string of "0" is returned
 			return "0";
 		}
+		
+		//If a filereader is open, close it.
 		finally
 		{
 			try {

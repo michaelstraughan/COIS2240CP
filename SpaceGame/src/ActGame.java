@@ -31,7 +31,7 @@ public class ActGame extends Parent
 		
 		mainStage = new Stage();
 		
-		mainStage.setTitle("Space Game");
+		mainStage.setTitle("SPACING OUT");
 
 		Group root = new Group();
 		mainScene = new Scene(root,WIDTH,HEIGHT,Color.BLACK);
@@ -60,6 +60,8 @@ public class ActGame extends Parent
 		mainStage.show();
 	}
 	
+	//GetMainStage a getter is used to retrieve the window layout of the 
+	//game, so that it can be opened from the MainMenuGUI start button.
 	public Stage getMainStage() {
 		return mainStage;
 	}
